@@ -25,7 +25,7 @@
 #include "tests.h" 
 #include "dfmem.h"
 #include "interrupts.h"
-#include "stopwatch.h"
+#include "sclock.h"
 #include "ams-enc.h"
 #include "tih.h"
 #include "blink.h"

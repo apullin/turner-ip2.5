@@ -3,8 +3,8 @@
 */
 
 static void cmdGetImuLoopZGyro(unsigned char type, unsigned char status, unsigned char length, unsigned char *frame) {
-    unsigned int count;     unsigned long tic;   unsigned char *tic_char;
-    MacPacket packet; Payload pld;
+    //unsigned int count;     unsigned long tic;   unsigned char *tic_char;
+    //MacPacket packet; Payload pld;
 /*
     unsigned char* gyrotemp;
 	int zgyro;

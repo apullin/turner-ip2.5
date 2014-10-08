@@ -10,7 +10,7 @@
 #include "tiH.h"
 #include "timer.h"
 #include "telemetry.h"
-#include "stopwatch.h"
+#include "sclock.h"
 #include "blink.h"
 
 extern pidPos pidObjs[NUM_PIDS];

@@ -2,7 +2,7 @@
 #include "timer.h"
 #include "mpu6000.h"
 #include "steering.h"
-#include "stopwatch.h"
+#include "sclock.h"
 //#include "dfmem_extra.h" replace with telemetry.c
 #include "move_queue.h"
 #include "utils.h" 

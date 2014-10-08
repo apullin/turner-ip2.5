@@ -59,7 +59,7 @@
 #include <stdlib.h>
 #include "radio_settings.h"
 #include "ams-enc.h"
-#include "stopwatch.h"
+#include "sclock.h"
 #include "tih.h"
 
 volatile Queue fun_queue;

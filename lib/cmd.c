@@ -12,7 +12,7 @@
 #include "dfmem.h"
 #include "utils.h"
 #include "ports.h"
-#include "stopwatch.h"
+#include "sclock.h"
 #include "led.h"
 #include "blink.h"
 #include "payload.h"

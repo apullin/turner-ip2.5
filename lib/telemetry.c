@@ -3,7 +3,7 @@
 #include "pid-ip2.5.h"
 #include "utils.h"
 #include "telemetry.h"
-#include "stopwatch.h"
+#include "sclock.h"
 #include "dfmem.h"
 #include "radio.h"
 #include "../MyConsts/radio_settings.h"

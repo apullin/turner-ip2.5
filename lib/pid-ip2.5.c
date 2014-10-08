@@ -21,7 +21,7 @@
 #include "adc.h"
 #include "move_queue.h"
 #include "p33Fxxxx.h"
-#include "stopwatch.h"
+#include "sclock.h"
 //#include "incap.h" // input capture
 #include "ams-enc.h"
 #include "tih.h"
