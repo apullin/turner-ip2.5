@@ -7,7 +7,6 @@
 *.hex
 *.mcs
 *.mcw
-build
 dist
 private
 *.mk

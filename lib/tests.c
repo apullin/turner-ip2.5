@@ -48,7 +48,6 @@
  */
 
 #include "tests.h"
-#include "init.h"
 #include "consts.h"
 #include "utils.h"
 #include "radio.h"
