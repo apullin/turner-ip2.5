@@ -1,16 +1,30 @@
-# Compiled source & project cruft #
-###################################
+# Python bytecode
 *.pyc
 
+# Reports and binaries from IDE
 *.cof
 *.map
 *.hex
 *.mcs
 *.mcw
+
+# IDE files that should not be in SCM
 dist
+build
 private
+Makefile-default.mk
+Makefile-genesis.properties
+Makefile-impl.mk
+Makefile-local-default.mk
+Makefile-variables.mk
+Package-default.bash
+nbproject/private
 *.mk
 *.properties
 *.bash
 /obj/
 /*.old
+
+# version-string is generated upon compile, does not go in SCM
+version-string.h
+
