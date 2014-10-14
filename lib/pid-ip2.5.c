@@ -65,7 +65,6 @@ int measLast2[NUM_PIDS];
 int bemf[NUM_PIDS]; //used to store the true, unfiltered speed
 
 
-
 // -------------------------------------------
 // called from main()
 void pidSetup()
@@ -510,5 +509,3 @@ void UpdatePID(pidPos *pid)
 					((long)(MAXTHROT) - (long)(pid->preSat)) / ((long)GAIN_SCALER);		
 	}      
 }
-
-

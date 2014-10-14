@@ -35,6 +35,7 @@
 #include "steering.h"
 #include "consts.h"
 #include "adc_pid.h"
+#include "init.h"
 
 Payload rx_payload;
 MacPacket rx_packet;

@@ -34,6 +34,7 @@
         <itemPath>../imageproc-lib/uart_driver.h</itemPath>
         <itemPath>../imageproc-lib/utils.h</itemPath>
         <itemPath>../imageproc-lib/version.h</itemPath>
+        <itemPath>../imageproc-lib/stopwatch.h</itemPath>
       </logicalFolder>
       <logicalFolder name="lib" displayName="lib" projectFiles="true">
         <itemPath>lib/cmd-aux.h</itemPath>
@@ -49,6 +50,7 @@
         <itemPath>lib/telemetry.h</itemPath>
         <itemPath>lib/tests.h</itemPath>
         <itemPath>lib/uart_send.h</itemPath>
+        <itemPath>lib/init.h</itemPath>
       </logicalFolder>
       <logicalFolder name="MyConsts" displayName="MyConsts" projectFiles="true">
         <itemPath>MyConsts/radio_settings.h</itemPath>
@@ -88,6 +90,8 @@
         <itemPath>../imageproc-lib/uart_driver.c</itemPath>
         <itemPath>../imageproc-lib/version.c</itemPath>
         <itemPath>../imageproc-lib/delay.s</itemPath>
+        <itemPath>../imageproc-lib/stopwatch.c</itemPath>
+        <itemPath>../imageproc-lib/init_default.c</itemPath>
       </logicalFolder>
       <logicalFolder name="lib" displayName="lib" projectFiles="true">
         <itemPath>lib/cmd-aux.c</itemPath>
@@ -102,6 +106,7 @@
         <itemPath>lib/tests.c</itemPath>
         <itemPath>lib/traps.c</itemPath>
         <itemPath>lib/uart_send.c</itemPath>
+        <itemPath>lib/init.c</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
@@ -261,7 +266,7 @@
         <property key="fast-math" value="false"/>
         <property key="generic-16-bit" value="false"/>
         <property key="legacy-libc" value="false"/>
-        <property key="oXC16glb-macros" value="__IMAGEPROC25;PID_HARDWARE"/>
+        <property key="oXC16glb-macros" value="__IMAGEPROC25;PID_HARDWARE;__IMAGEPROC2"/>
         <property key="output-file-format" value="elf"/>
         <property key="relaxed-math" value="false"/>
         <property key="save-temps" value="false"/>
