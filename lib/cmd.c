@@ -4,7 +4,7 @@
 * Date: 2010-07-10
 * Author: stanbaek
 **************************************************************************/
-
+#include "utils.h"
 #include "cmd.h"
 #include "cmd_const.h"
 #include "cmd-motor.h"
@@ -13,7 +13,6 @@
 #include "utils.h"
 #include "ports.h"
 #include "sclock.h"
-#include "led.h"
 #include "blink.h"
 #include "payload.h"
 #include "mac_packet.h"
@@ -27,11 +26,11 @@
 #include "tests.h"
 #include "queue.h"
 #include "version.h"
-#include "../MyConsts/radio_settings.h"
 #include "tiH.h"
 #include "timer.h"
 #include "telemetry.h"
 #include "battery.h"
+#include "settings.h"
 
 
 #include <stdio.h>
@@ -189,10 +188,12 @@ static void cmdEraseSector(unsigned char type, unsigned char status, unsigned ch
 //	eraseDFMemSectors0a0b();
 /// updated for IP2.5
 // hard code for now 300 samples at 300 Hz
-	CRITICAL_SECTION_START   //  can't have interrupt process grabbing SPI2
-	dfmemEraseSectorsForSamples( (unsigned long) 300, sizeof(telemStruct_t));
-	CRITICAL_SECTION_END
-	mpuUpdate(); // make sure we can still use SPI2
+    //TODO: This entire command needs to be overhauled (pullin, ronf)
+
+//	CRITICAL_SECTION_START   //  can't have interrupt process grabbing SPI2
+//	dfmemEraseSectorsForSamples( (unsigned long) 300, sizeof(telemStruct_t));
+//	CRITICAL_SECTION_END
+//	mpuBeginUpdate(); // make sure we can still use SPI2
 }
 
 
@@ -212,7 +213,7 @@ static void cmdStartTelemetry(unsigned char type, unsigned char status, unsigned
 	idx+=2;
       samplesToSave = TelemControl.count; // **** this runs sample capture in T5 interrupt
 	TelemControl.skip = frame[idx]+(frame[idx+1]<<8); 
-	swatchReset();
+//	swatchReset(); //TODO: swatch module no longer exists.
 	if(TelemControl.count > 0) 
 	{ TelemControl.onoff = 1;   // use just steering servo sample capture
 	 } // enable telemetry last 
@@ -223,8 +224,7 @@ static void cmdGetPIDTelemetry(unsigned char type, unsigned char status, unsigne
 								 unsigned char *frame)
 { 	unsigned int sampLen = sizeof(telemStruct_t);
 	telemGetPID(packetNum);  // get current state
-	 radioConfirmationPacket(RADIO_DEST_ADDR,
-						     CMD_SPECIAL_TELEMETRY, 
+	radioConfirmationPacket(RADIO_DST_ADDR, CMD_SPECIAL_TELEMETRY,
 						     status, sampLen, (unsigned char *) &telemPIDdata);  
 	packetNum++;
     // delay_ms(25);	// slow down for XBee 57.6 K

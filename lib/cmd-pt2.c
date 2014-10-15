@@ -261,12 +261,6 @@ static void cmdSteer(unsigned char type, unsigned char status, unsigned char len
 */
 }
 
-
-
-
-
-
-
 static void cmdSetCtrldTurnRate(unsigned char type, unsigned char status, unsigned char length, unsigned char *frame){
 	int rate;
 	int idx = 0;

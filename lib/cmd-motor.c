@@ -6,12 +6,12 @@
 #include "utils.h"
 #include "pid-ip2.5.h"
 #include "radio.h"
-#include "../MyConsts/radio_settings.h"
 #include "tiH.h"
 #include "timer.h"
 #include "telemetry.h"
 #include "sclock.h"
 #include "blink.h"
+#include "settings.h"
 
 extern pidPos pidObjs[NUM_PIDS];
 
@@ -39,7 +39,8 @@ void cmdEStop(unsigned char type, unsigned char status, unsigned char length, un
 { 	CRITICAL_SECTION_START; // Disable interrupts
 	EmergencyStop(); // stop pid loop
 	CRITICAL_SECTION_END; // Re-enable interrupts
-	radioConfirmationPacket(RADIO_DEST_ADDR, CMD_ESTOP, status, length, frame);  
+//	radioConfirmationPacket(RADIO_DEST_ADDR, CMD_ESTOP, status, length, frame);
+        radioSendData(RADIO_DST_ADDR, status, CMD_ESTOP, length, frame, 1);
     	return; //success     
 }
 
@@ -55,8 +56,9 @@ void cmdEStopSend(void)
 //	message_string = MESSAGE;
 	string_length = sizeof(MESSAGE);
 // note packet won't be sent until return from battery interrupt
-	radioConfirmationPacket(RADIO_DEST_ADDR, CMD_ESTOP, status, string_length, message_string);  
-
+	//radioConfirmationPacket(RADIO_DEST_ADDR, CMD_ESTOP, status, string_length, message_string);
+        radioSendData(RADIO_DST_ADDR, status, CMD_ESTOP, string_length, message_string, 1);
+        
 	blink_leds(30,150); // also alert that we have had a battery brown out
 	return;
 }
@@ -69,8 +71,9 @@ void cmdZeroPos(unsigned char type, unsigned char status, unsigned char length, 
 	motor_count[0] = pidObjs[0].p_state;
 	motor_count[1] = pidObjs[1].p_state;
 
-	radioConfirmationPacket(RADIO_DEST_ADDR, CMD_ZERO_POS,\
-		 status, sizeof(motor_count), (unsigned char *)motor_count);  
+//	radioConfirmationPacket(RADIO_DEST_ADDR, CMD_ZERO_POS,
+//		 status, sizeof(motor_count), (unsigned char *)motor_count);
+
      pidZeroPos(0); pidZeroPos(1);
 }
 
@@ -104,7 +107,7 @@ void cmdSetPIDGains(unsigned char type, unsigned char status, unsigned char leng
 	pidSetGains(1,Kp,Ki,Kd,Kaw, ff);
 
 	//Send confirmation packet
-	radioConfirmationPacket(RADIO_DEST_ADDR, CMD_SET_PID_GAINS, status, 20, frame);  
+	radioConfirmationPacket(RADIO_DST_ADDR, CMD_SET_PID_GAINS, status, 20, frame);  
       return; //success
 }
 
@@ -136,7 +139,7 @@ void cmdSetVelProfile(unsigned char type, unsigned char status, unsigned char le
 	setPIDVelProfile(1, interval, delta, vel);
 
 	//Send confirmation packet
-	radioConfirmationPacket(RADIO_DEST_ADDR, CMD_SET_VEL_PROFILE, status, 48, frame);  
+	radioConfirmationPacket(RADIO_DST_ADDR, CMD_SET_VEL_PROFILE, status, 48, frame);  
      return; //success
 }
 

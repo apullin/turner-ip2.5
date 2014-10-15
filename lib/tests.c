@@ -57,10 +57,10 @@
 #include "dfmem.h"
 #include <string.h>
 #include <stdlib.h>
-#include "radio_settings.h"
 #include "ams-enc.h"
 #include "sclock.h"
 #include "tih.h"
+#include "settings.h"
 
 volatile Queue fun_queue;
 extern mpuObj mpu_data;
@@ -86,7 +86,7 @@ unsigned char test_radio(unsigned char type, unsigned char status,\
     // Get a new packet from the pool
     packet = radioRequestPacket(length);
     if(packet == NULL) return 0;
-    macSetDestAddr(packet, RADIO_DEST_ADDR);
+    macSetDestAddr(packet, RADIO_DST_ADDR);
 
     // Prepare the payload
     pld = packet->payload;
@@ -115,12 +115,12 @@ unsigned char test_gyro(unsigned char type, unsigned char status,\
 {  	MacPacket packet;
      Payload pld;
 	// refresh MPU reading
-	mpuUpdate();
+	mpuBeginUpdate();
 
     // Get a new packet from the pool
     	packet = radioRequestPacket(sizeof(mpu_data));
     	if(packet == NULL) return 0;
-    	macSetDestAddr(packet, RADIO_DEST_ADDR);
+    	macSetDestAddr(packet, RADIO_DST_ADDR);
 
      // Prepare the payload
      	pld = packet->payload;
@@ -152,12 +152,14 @@ unsigned char test_hall(unsigned char type, unsigned char status,\
     Payload pld;
 // refresh Hall reading
 	for(i = 0; i< NUM_ENC; i++)
-	{ amsGetPos(i); }
+	{ //amsGetPos(i); 
+            amsEncoderStartAsyncRead();
+        }
 
     // Get a new packet from the pool
     packet = radioRequestPacket(sizeof(encPos));
     if(packet == NULL) return 0;
-    macSetDestAddr(packet, RADIO_DEST_ADDR);
+    macSetDestAddr(packet, RADIO_DST_ADDR);
 
    // Prepare the payload
     pld = packet->payload;
@@ -195,7 +197,7 @@ unsigned char test_accel(unsigned char type, unsigned char status,\
         // Get a new packet from the pool
         packet = radioRequestPacket(6);
         if(packet == NULL) return;
-        macSetDestAddr(packet, RADIO_DEST_ADDR);
+        macSetDestAddr(packet, RADIO_DST_ADDR);
         // Toggle LED
         LED_1 = ~LED_1;
         // Fill the payload
@@ -252,7 +254,7 @@ unsigned char test_dflash(unsigned char type, unsigned char status,
     // Get a new packet from the pool
     packet = radioRequestPacket(strlen(str1));
     if(packet == NULL) return 0;
-    macSetDestAddr(packet, RADIO_DEST_ADDR);
+    macSetDestAddr(packet, RADIO_DST_ADDR);
 
     // Prepare the payload
     pld = packet->payload;
@@ -269,7 +271,7 @@ unsigned char test_dflash(unsigned char type, unsigned char status,
     // Get a new packet from the pool
     packet = radioRequestPacket(strlen(str2));
     if(packet == NULL) return 0;
-    macSetDestAddr(packet, RADIO_DEST_ADDR);
+    macSetDestAddr(packet, RADIO_DST_ADDR);
 
     // Prepare the payload
     pld = packet->payload;
@@ -286,7 +288,7 @@ unsigned char test_dflash(unsigned char type, unsigned char status,
     // Get a new packet from the pool
     packet = radioRequestPacket(strlen(str3));
     if(packet == NULL) return 0;
-    macSetDestAddr(packet, RADIO_DEST_ADDR);
+    macSetDestAddr(packet, RADIO_DST_ADDR);
 
     // Prepare the payload
     pld = packet->payload;
@@ -304,7 +306,7 @@ unsigned char test_dflash(unsigned char type, unsigned char status,
     // Get a new packet from the pool
     packet = radioRequestPacket(strlen(str4));
     if(packet == NULL) return 0;
-    macSetDestAddr(packet, RADIO_DEST_ADDR);
+    macSetDestAddr(packet, RADIO_DST_ADDR);
 
     // Prepare the payload
     pld = packet->payload;
@@ -344,13 +346,13 @@ unsigned char test_motor(unsigned char type, unsigned char status, \
 	 on_time = (unsigned long)( (data[3] << 8) + data[2]);
 	 dutycycle = (int)((data[5] << 8) + data[4]);
 	 tiHSetDC(motor_id, dutycycle);
-	swatchDelayMs(on_time);
+	delay_ms(on_time);
   	tiHSetDC(motor_id, 0);
 // send an ack packet back - could have data later...
   // Get a new packet from the pool
     packet = radioRequestPacket(sizeof(ack_string));
     if(packet == NULL) return 0;
-    macSetDestAddr(packet, RADIO_DEST_ADDR);
+    macSetDestAddr(packet, RADIO_DST_ADDR);
 
    // Prepare the payload
     pld = packet->payload;

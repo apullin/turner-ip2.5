@@ -28,13 +28,13 @@
         <itemPath>../imageproc-lib/queue.h</itemPath>
         <itemPath>../imageproc-lib/radio.h</itemPath>
         <itemPath>../imageproc-lib/sclock.h</itemPath>
-        <itemPath>../imageproc-lib/spi.h</itemPath>
         <itemPath>../imageproc-lib/spi_controller.h</itemPath>
         <itemPath>../imageproc-lib/tih.h</itemPath>
         <itemPath>../imageproc-lib/uart_driver.h</itemPath>
         <itemPath>../imageproc-lib/utils.h</itemPath>
         <itemPath>../imageproc-lib/version.h</itemPath>
-        <itemPath>../imageproc-lib/stopwatch.h</itemPath>
+        <itemPath>../imageproc-lib/bsp-ip25.h</itemPath>
+        <itemPath>../imageproc-lib/mpu6000.h</itemPath>
       </logicalFolder>
       <logicalFolder name="lib" displayName="lib" projectFiles="true">
         <itemPath>lib/cmd-aux.h</itemPath>
@@ -52,9 +52,7 @@
         <itemPath>lib/uart_send.h</itemPath>
         <itemPath>lib/init.h</itemPath>
       </logicalFolder>
-      <logicalFolder name="MyConsts" displayName="MyConsts" projectFiles="true">
-        <itemPath>MyConsts/radio_settings.h</itemPath>
-      </logicalFolder>
+      <itemPath>source/settings.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -74,7 +72,6 @@
         <itemPath>../imageproc-lib/carray.c</itemPath>
         <itemPath>../imageproc-lib/dfmem.c</itemPath>
         <itemPath>../imageproc-lib/i2c_driver.c</itemPath>
-        <itemPath>../imageproc-lib/ipspi1.c</itemPath>
         <itemPath>../imageproc-lib/larray.c</itemPath>
         <itemPath>../imageproc-lib/mac_packet.c</itemPath>
         <itemPath>../imageproc-lib/mpu6000.c</itemPath>
@@ -90,7 +87,6 @@
         <itemPath>../imageproc-lib/uart_driver.c</itemPath>
         <itemPath>../imageproc-lib/version.c</itemPath>
         <itemPath>../imageproc-lib/delay.s</itemPath>
-        <itemPath>../imageproc-lib/stopwatch.c</itemPath>
         <itemPath>../imageproc-lib/init_default.c</itemPath>
       </logicalFolder>
       <logicalFolder name="lib" displayName="lib" projectFiles="true">
@@ -104,7 +100,6 @@
         <itemPath>lib/steering.c</itemPath>
         <itemPath>lib/telemetry.c</itemPath>
         <itemPath>lib/tests.c</itemPath>
-        <itemPath>lib/traps.c</itemPath>
         <itemPath>lib/uart_send.c</itemPath>
         <itemPath>lib/init.c</itemPath>
       </logicalFolder>

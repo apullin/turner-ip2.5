@@ -8,6 +8,10 @@
  * modified Jan. 2012 to include median filter on back emf
  * modified Jan. 2013 to include AMS Hall encoder, and MPU 6000 gyro
  */
+
+#include <xc.h>
+
+#include "utils.h"
 #include "pid-ip2.5.h"
 #include "consts.h"
 #include "dfmem.h"
@@ -17,16 +21,16 @@
 #include "timer.h"
 #include "adc_pid.h"
 #include "pwm.h"
-#include "led.h"
+#include "utils.h"
 #include "adc.h"
 #include "move_queue.h"
-#include "p33Fxxxx.h"
 #include "sclock.h"
 //#include "incap.h" // input capture
 #include "ams-enc.h"
 #include "tih.h"
 #include <stdlib.h> // for malloc
 #include "init.h"  // for Timer1
+#include "settings.h"
 
 //#define HALFTHROT 10000
 #define HALFTHROT 2000
@@ -241,8 +245,8 @@ void pidZeroPos(int pid_num){
 // disable interrupts to reset state variables
 	DisableIntT1; // turn off pid interrupts
 /*   if Hall not present will hang */
-#if HALL_SENSOR == 1
-	amsHallSetup(); //  reinitialize rev count and relative zero encoder position for both motors
+#ifdef HALL_SENSOR
+	amsEncoderSetup(); //  reinitialize rev count and relative zero encoder position for both motors
 #endif
 	pidObjs[pid_num].p_state = 0;
 // reset position setpoint as well
@@ -394,9 +398,10 @@ void pidGetState()
 
 // only works to +-32K revs- might reset after certain number of steps? Should wrap around properly
 /*   if Hall not present will hang */
-#if HALL_SENSOR == 1
+#ifdef HALL_SENSOR
 	for(i =0; i<NUM_PIDS; i++)
-	{  amsGetPos(i); 
+	{  //amsGetPos(i);
+            amsEncoderStartAsyncRead();
 	    p_state = (long)(encPos[i].pos << 2);		// pos 14 bits 0x0 -> 0x3fff
 	    p_state = p_state + (encPos[i].oticks << 16);
 	    p_state = p_state - (long)(encPos[i].offset <<2); 	//  subtract offset to get zero position
@@ -450,8 +455,8 @@ int measurements[NUM_PIDS];
    	pidObjs[0].v_state = bemf[0]; 
 	pidObjs[1].v_state = bemf[1];  //  might also estimate from deriv of pos data
     //if((measurements[0] > 0) || (measurements[1] > 0)) {
-    if((measurements[0] > 0)) { LED_BLUE = 1;}
-    else{ LED_BLUE = 0;}
+    if((measurements[0] > 0)) { LED_YELLOW = 1;}
+    else{ LED_YELLOW = 0;}
 #endif
 }
 

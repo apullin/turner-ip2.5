@@ -21,7 +21,6 @@
 #include "utils.h"
 #include "queue.h"
 #include "radio.h"
-#include "radio_settings.h"
 #include "tests.h" 
 #include "dfmem.h"
 #include "interrupts.h"
@@ -36,6 +35,7 @@
 #include "consts.h"
 #include "adc_pid.h"
 #include "init.h"
+#include "settings.h"
 
 Payload rx_payload;
 MacPacket rx_packet;
@@ -66,8 +66,8 @@ int main() {
     sclockSetup();
     mpuSetup();
     /*   if Hall not present will hang */
-#if HALL_SENSOR == 1
-    amsHallSetup();
+#ifdef HALL_SENSOR
+    amsEncoderSetup();
 #endif
     dfmemSetup();
     tiHSetup(); // set up H bridge drivers
@@ -77,7 +77,7 @@ int main() {
     // Radio setup
     blink_leds(4, 200); // blink LEDs 4 times at half sec
     radioInit(RADIO_RXPQ_MAX_SIZE, RADIO_TXPQ_MAX_SIZE);
-    radioSetChannel(RADIO_MY_CHAN);
+    radioSetChannel(RADIO_CHANNEL);
     radioSetSrcAddr(RADIO_SRC_ADDR);
     radioSetSrcPanID(RADIO_PAN_ID);
     setupTimer6(RADIO_FCY); // Radio and buffer loop timer

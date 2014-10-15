@@ -1,12 +1,12 @@
+#include "utils.h"
 #include "cmd.h"
 #include "cmd_const.h"
 #include "cmd-motor.h"
 #include "cmd-aux.h"
 #include "radio.h"
-#include "../MyConsts/radio_settings.h"
-#include "led.h"
 #include "pid-ip2.5.h"
 #include "version.h"
+#include "settings.h"
 
 /*-----------------------------------------------------------------------------
  *          AUX functions
@@ -14,7 +14,8 @@
 void cmdEcho(unsigned char type, unsigned char status, unsigned char length, unsigned char *frame) 
 { // MacPacket packet; Payload pld;
 	//Send confirmation packet
-	radioConfirmationPacket(RADIO_DEST_ADDR, CMD_ECHO, status, length, frame);  
+	//radioConfirmationPacket(RADIO_DEST_ADDR, CMD_ECHO, status, length, frame);
+        radioSendData(RADIO_DST_ADDR, status, CMD_ECHO, length, frame, 1);
     return; //success     
 }
 
@@ -39,8 +40,9 @@ void cmdWhoAmI(unsigned char type, unsigned char status, unsigned char length, u
 	string_length=i;     
 	/* serialSendData(RADIO_DEST_ADDR, status, CMD_WHO_AM_I,
             				string_length, version_string, 0); */
-	radioConfirmationPacket(RADIO_DEST_ADDR, CMD_WHO_AM_I, 
-					status, string_length, version_string);  
+//	radioConfirmationPacket(RADIO_DST_ADDR, CMD_WHO_AM_I,
+//					status, string_length, version_string);
+        radioSendData(RADIO_DST_ADDR, status, CMD_WHO_AM_I, string_length, version_string, 1);
       return; //success
 }
 
